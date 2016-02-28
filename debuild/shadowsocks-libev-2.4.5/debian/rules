@@ -12,6 +12,8 @@
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
+_PKGNAME=$(shell dpkg-parsechangelog | grep '^Source: ' | grep -o ' .*' | cut -b2-)
+_VERSION=$(shell dpkg-parsechangelog | sed -rne 's,^Version: ([^-+~]+).*,\1,p')
 
 # This has to be exported to make some magic below work.
 export DH_OPTIONS
@@ -36,3 +38,11 @@ override_dh_installinit:
 
 %:
 	dh $@  --with systemd
+
+get-orig-source:
+	(cd ..; wget -q https://github.com/shadowsocks/shadowsocks-libev/archive/v$(_VERSION).tar.gz -O $(_PKGNAME)_$(_VERSION).orig.tar.gz;)
+	rm -rf $(_PKGNAME)_temp;
+	mkdir $(_PKGNAME)_temp;
+	tar --overwrite -xf ../$(_PKGNAME)_$(_VERSION).orig.tar.gz -C $(_PKGNAME)_temp;
+	cp -n -a $(_PKGNAME)_temp/$(_PKGNAME)*/. . || true;
+	rm -rf $(_PKGNAME)_temp;
