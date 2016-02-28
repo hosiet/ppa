@@ -1,0 +1,15 @@
+Source: binfmt-wine
+Section: utils
+Priority: optional
+Maintainer: Boyuan Yang <073plan@gmail.com>
+Build-Depends: debhelper (>= 9), init-system-helpers, dh-systemd
+Standards-Version: 3.9.6
+Homepage: https://github.com/archlinuxcn/repo/blob/master/binfmt-wine
+
+Package: binfmt-wine
+Architecture: all
+Depends: systemd, wine, ${misc:Depends}
+Description: Support to run windows binaries via wine
+ This package provides support to register interpreter
+ for windows binaries.
+ 
