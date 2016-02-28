@@ -22,11 +22,10 @@ start_build()
     cd $_BUILDDIR
     for i in *; do
         if [ -n $i ] && [ -d $i ]; then
-            enter_do_build $i &
+            enter_do_build $i
         fi
     done
     cd $start_build_CURR_PWD
 }
 
 start_build
-while true; do sleep 300; done
