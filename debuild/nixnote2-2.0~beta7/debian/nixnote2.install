@@ -1,0 +1,9 @@
+nixnote2 usr/bin/
+java usr/share/nixnote2
+images usr/share/nixnote2
+qss usr/share/nixnote2
+translations/*.qm usr/share/nixnote2/translations
+certs usr/share/nixnote2
+nixnote2.desktop usr/share/applications
+theme.ini usr/share/nixnote2
+colors.txt usr/share/nixnote2

@@ -1,0 +1,20 @@
+Source: nixnote2
+Section: utils
+Priority: optional
+Maintainer: Boyuan Yang <073plan@gmail.com>
+Build-Depends: debhelper (>= 9), qttools5-dev-tools, libavcodec-dev, libavformat-dev, libswscale-dev, libqt5webkit5-dev, libpoppler-qt5-dev, libopencv-dev, libboost-dev, libhunspell-dev, libcurl4-openssl-dev | libcurl-dev | libcurl4-nss-dev | libcurl4-gnutls-dev
+Standards-Version: 3.9.6
+Homepage: http://nevernote.sourceforge.net
+Vcs-Git: https://github.com/baumgarr/nixnote2.git
+Vcs-Browser: https://github.com/baumgarr/nixnote2
+
+Package: nixnote2
+Architecture: any
+Depends: tidy, ${shlibs:Depends}, ${misc:Depends}
+Recommends: mimetex, libreoffice-common, default-jre | java-runtime
+Description: Open Source Evernote client
+ NixNote is a client for the Evernote service (www.evernote.com).  It
+ will allow synchronization and editing of notes from your local
+ system.
+ .
+ It was once known as nevernote.

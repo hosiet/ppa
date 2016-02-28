@@ -1,0 +1,125 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+
+ERICDIR=debian/eric/usr/share/eric/modules
+QTAPIFILE=debian/apis/pyqt.api
+KDEAPIFILE=debian/apis/pykde.api
+PYTHONAPIFILE=debian/apis/python.api
+APIFILES=
+#$(QTAPIFILE)
+# $(KDEAPIFILE)
+# $(PYTHONAPIFILE)
+LAN=cs de en es fr it pt ru tr zh_CN
+
+clean:
+	dh_testdir
+	dh_testroot
+	find . -name "*.pyc" -exec rm {} \;
+	find . -name "Ui_*" -exec rm {} \;
+	find . -name __pycache__ -prune | xargs rm -rf
+	rm -rf debian/eric debian/apis debian/qtapis debian/kdeapis debian/pyapis
+	rm -f eric6*
+	rm -f *-stamp
+	dh_clean 
+
+
+apifile-stamp:
+	#   generate API files
+	#mkdir -p debian/qtapis debian/kdeapis debian/pyapis debian/apis
+	#python3 debian/gen_qt_apis.py debian/qtapis/
+	#python debian/gen_kde_apis.py debian/kdeapis/
+	#python debian/gen_python_api.py debian/pyapis/
+	#sort -u debian/qtapis/*.api > $(QTAPIFILE)
+	#sort -u debian/kdeapis/*.api > $(KDEAPIFILE)
+	#sort -u debian/pyapis/*.api > $(PYAPIFILE)
+	touch apifile-stamp
+
+build: build-arch build-indep
+build-arch:
+build-indep:
+
+install: apifile-stamp
+	dh_testdir -i
+	dh_testroot -i
+	dh_prep -i 
+	python3 install.py -i debian/eric -x -c -f debian/eric6config.debian
+	dh_installdirs -i
+
+	#for i in transl-*/eric/i18n/*.ts; do\
+	#	lrelease-qt4 $$i -qm debian/eric/usr/share/qt4/translations/`basename $$i .ts`.qm;\
+	#done
+
+	rm -f debian/eric/usr/share/doc/eric/LICENSE.GPL3
+	rm -f $(ERICDIR)/LICENSE.GPL3
+	rm -f $(ERICDIR)/install*.py
+
+#   copy API files
+	mv debian/eric/usr/share/eric/api/* debian/eric-api-files/usr/share/eric/api
+
+	#for i in $(APIFILES); do \
+	#	install -o root -g root -m 644 $$i \
+	#		debian/eric-api-files/usr/share/eric/api/python; \
+	#done
+
+#	remove README-PyXML.txt
+	rm -f debian/eric/usr/share/doc/eric/README-PyXML.txt
+#	remove the ThirdParty libraries
+	rm -rf debian/eric/usr/share/eric/modules/ThirdParty
+	find debian/eric/ -name '*.py[co]' -delete
+	rm -f debian/eric/usr/share/applications/eric6.desktop
+	find . -name __pycache__ -prune | xargs rm -rf
+
+binary: binary-indep binary-arch
+binary-arch:
+
+# Build architecture-independent files here.
+binary-indep: install
+	dh_testdir -i
+	dh_testroot -i
+	dh_installchangelogs
+	dh_installdocs -i --exclude=LICENSE.GPL3
+	dh_installmenu -i
+	dh_installman -i
+	dh_install -i -X__pycache__
+	dh_link -i
+	dh_lintian -i
+	dh_compress -i
+	dh_python3 -X.*/DebugClients/Python/.* -X.*/UtilitiesPython2/.*
+	dh_fixperms -i
+	dh_installdeb -i
+	dh_gencontrol -i
+	dh_md5sums -i
+	dh_builddeb -i
+
+get-orig-source:
+	VER=$(shell dpkg-parsechangelog | sed -rne 's,^Version: ([^-+~]+).*,\1,p');\
+	set -e;\
+	wget -q http://sourceforge.net/projects/eric-ide/files/eric6/stable/$$VER/eric6-$$VER.tar.gz/download\
+	 -O eric_$$VER.orig.tar.gz; \
+	tar -xz --exclude=eric/DebugClients/Python/coverage/htmlfiles/jquery.tablesorter.min.js \
+		--exclude=eric/DebugClients/Python/coverage/htmlfiles/jquery.min.js \
+		--exclude=eric/DebugClients/Python/coverage/htmlfiles/coverage_html.js \
+		--exclude=eric/DebugClients/Python/coverage/htmlfiles/jquery.isonscreen.js \
+		--exclude=eric/DebugClients/Python/coverage/htmlfiles/jquery.hotkeys.js \
+		--exclude=eric/DebugClients/Python3/coverage/htmlfiles/jquery.tablesorter.min.js \
+		--exclude=eric/DebugClients/Python3/coverage/htmlfiles/jquery.min.js \
+		--exclude=eric/DebugClients/Python3/coverage/htmlfiles/coverage_html.js \
+		--exclude=eric/DebugClients/Python3/coverage/htmlfiles/jquery.isonscreen.js \
+		--exclude=eric/DebugClients/Python3/coverage/htmlfiles/jquery.hotkeys.js \
+		--exclude=eric/Helpviewer/data/javascript/jquery.js \
+		--exclude=eric/Helpviewer/data/javascript/jquery-ui.js \
+		-f eric_$$VER.orig.tar.gz; \
+	mv eric6-$$VER eric-$$VER; \
+	tar -czf eric_$$VER.orig.tar.gz eric-$$VER; \
+	rm -rf eric-$$VER; \
+	for L in ${LAN}; do\
+	 wget -q http://sourceforge.net/projects/eric-ide/files/eric6/stable/$$VER/eric6-i18n-$$L-$$VER.tar.gz/download\
+	  -O eric_$$VER.orig-transl-$$L.tar.gz;\
+	done;
+#	mv eric_$$VER.orig-transl-zh_CN.GB2312.tar.gz eric_$$VER.orig-transl-zhCNGB2312.tar.gz
+
+.PHONY: clean binary-indep binary-arch binary install
