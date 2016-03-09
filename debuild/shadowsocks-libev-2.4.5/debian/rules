@@ -12,8 +12,6 @@
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
-_PKGNAME=$(shell dpkg-parsechangelog | grep '^Source: ' | grep -o ' .*' | cut -b2-)
-_VERSION=$(shell dpkg-parsechangelog | sed -rne 's,^Version: ([^-+~]+).*,\1,p')
 
 # This has to be exported to make some magic below work.
 export DH_OPTIONS
@@ -39,10 +37,12 @@ override_dh_installinit:
 %:
 	dh $@  --with systemd
 
-get-orig-source:
-	(cd ..; wget -q https://github.com/shadowsocks/shadowsocks-libev/archive/v$(_VERSION).tar.gz -O $(_PKGNAME)_$(_VERSION).orig.tar.gz;)
-	rm -rf $(_PKGNAME)_temp;
-	mkdir $(_PKGNAME)_temp;
-	tar --overwrite -xf ../$(_PKGNAME)_$(_VERSION).orig.tar.gz -C $(_PKGNAME)_temp;
-	cp -n -a $(_PKGNAME)_temp/$(_PKGNAME)*/. . || true;
-	rm -rf $(_PKGNAME)_temp;
+PKD  = $(abspath $(dir $(shell echo $(MAKEFILE_LIST) | cut -d' ' -f1)))
+PKG  = $(word 2,$(shell dpkg-parsechangelog -l$(PKD)/changelog --show-field=Source))
+VER ?= $(shell dpkg-parsechangelog -l$(PKD)/changelog | perl -ne 'print $$1 if m{^Version:\s+(?:\d+:)?(\d.*)(?:\-\d+.*)};')
+
+.PHONY: get-orig-source
+## http://wiki.debian.org/onlyjob/get-orig-source
+get-orig-source:  $(info I: $(PKG)_$(VER))
+	@echo "# Downloading..."
+	uscan --noconf --verbose --rename --destdir=$(CURDIR) --check-dirname-level=0 --force-download --download-version $(VER) $(PKD)
