@@ -28,5 +28,21 @@ include /usr/share/dpkg/default.mk
 #	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
 
 
+PKD  = $(abspath $(dir $(shell echo $(MAKEFILE_LIST) | cut -d' ' -f1)))
+PKG  = $(word 1,$(shell dpkg-parsechangelog -l$(PKD)/changelog --show-field=Source))
+VER ?= $(shell dpkg-parsechangelog -l$(PKD)/changelog | perl -ne 'print $$1 if m{^Version:\s+(?:\d+:)?(\d.*)(?:\-\d+.*)};')
 
-
+.PHONY: get-orig-source
+## http://wiki.debian.org/onlyjob/get-orig-source
+get-orig-source:  $(info I: $(PKG)_$(VER))
+	@echo "# Downloading..."
+	@echo "$(PKD), $(PKG), $(VER)"
+#	uscan --noconf --verbose --rename --destdir=$(CURDIR) --check-dirname-level=0 --force-download --download-version $(VER) $(PKD)
+	rm -rf $(PKG)_temp
+	mkdir $(PKG)_temp;
+	cd $(PKG)_temp; \
+	git clone --recursive https://github.com/sadhen/$(PKG).git; \
+	mv $(PKG) $(PKG)-$(VER); \
+	tar --exclude-vcs -czf ../$(PKG)_$(VER).orig.tar.gz ./$(PKG)-$(VER)*; \
+	cd ..; \
+	rm -rf $(PKG)_temp;
