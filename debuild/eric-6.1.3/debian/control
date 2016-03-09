@@ -9,12 +9,13 @@ Build-Depends-Indep: dh-python,
                      python3-pyqt5,
                      python3-pyqt5.qsci,
                      pyqt5-dev,
-                     python3-sip-dev
+                     python3-sip-dev,
+                     qttools5-dev-tools
 X-Python3-Version: >=3.0
-Standards-Version: 3.9.6
+Standards-Version: 3.9.7
 Homepage: http://eric-ide.python-projects.org/
 Vcs-Svn: svn://anonscm.debian.org/python-apps/packages/eric/trunk/
-Vcs-Browser: http://anonscm.debian.org/viewvc/python-apps/packages/eric/trunk/
+Vcs-Browser: https://anonscm.debian.org/viewvc/python-apps/packages/eric/trunk/
 
 Package: eric
 Architecture: all

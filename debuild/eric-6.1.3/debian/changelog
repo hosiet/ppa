@@ -1,3 +1,16 @@
+eric (6.1.3-0.2) unstable; urgency=low
+
+  * Non-maintainer upload
+  * Import changes from official repository
+    + Bump standards version to 3.9.7
+    + Remove eric.menu file
+    + Change VCS field from http to https
+    + Add patch 09_message_filter to avoid unimportant error messages
+    + Add depencency on qttools5-dev-tools
+    + Change lrelease-qt4 to lrelease -qt=5
+
+ -- Boyuan Yang <073plan@gmail.com>  Wed, 09 Mar 2016 18:16:55 +0800
+
 eric (6.1.3-0.1) unstable; urgency=low
 
   * NMU

@@ -1,7 +1,0 @@
-?package(eric):\
-    needs="X11" \
-    section="Applications/Programming"\
-    title="eric" \
-    longtitle="eric Python IDE" \
-    command="/usr/bin/eric" \
-    icon="/usr/share/pixmaps/eric.xpm"

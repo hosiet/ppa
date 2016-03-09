@@ -1,0 +1,12 @@
+Avoids popups when an QXcbConnection error occurs. The error message
+is unimportant.
+--- a/eric/E5Gui/E5ErrorMessage.py
++++ b/eric/E5Gui/E5ErrorMessage.py
+@@ -41,6 +41,7 @@
+             "eric6messagefilters")
+         
+         self.__defaultFilters = [
++            "QXcbConnection:",
+             "QFont::",
+             "QCocoaMenu::removeMenuItem",
+             "QCocoaMenu::insertNative",

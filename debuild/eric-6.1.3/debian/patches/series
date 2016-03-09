@@ -5,3 +5,4 @@
 05_desktop.patch
 06_no_blacklist.patch
 07_webbrowser.patch
+09_message_filter.patch
