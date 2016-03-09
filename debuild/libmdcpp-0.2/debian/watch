@@ -1,0 +1,2 @@
+version=3
+https://github.com/sadhen/libmdcpp/releases .*archive/v(.*)\.tar\.gz

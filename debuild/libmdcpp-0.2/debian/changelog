@@ -1,0 +1,11 @@
+libmdcpp (0.2-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Boyuan Yang <073plan@gmail.com>  Wed, 09 Mar 2016 19:08:00 +0800
+
+libmdcpp (0.1-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Darcy Shen <sadhen@zoho.com>  Thu, 26 Nov 2015 21:48:59 +0800

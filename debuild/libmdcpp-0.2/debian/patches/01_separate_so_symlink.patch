@@ -1,0 +1,13 @@
+Avoid installation of so symlink to pack correctly.
+--- a/lib/CMakeLists.txt
++++ b/lib/CMakeLists.txt
+@@ -6,6 +6,8 @@
+ 
+ set_target_properties(mdcpp PROPERTIES VERSION 0.2 SOVERSION 1)
+ 
+-install(TARGETS mdcpp LIBRARY DESTINATION ${LIB_INSTALL_DIR})
++install(TARGETS mdcpp LIBRARY DESTINATION ${LIB_INSTALL_DIR} COMPONENT runtime NAMELINK_SKIP)
++
++install(TARGETS mdcpp LIBRARY DESTINATION ${LIB_INSTALL_DIR} COMPONENT dev NAMELINK_ONLY)
+ 
+ install(FILES libmdcpp.h DESTINATION include)
