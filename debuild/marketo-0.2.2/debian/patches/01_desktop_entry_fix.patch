@@ -1,0 +1,16 @@
+Fix desktop file to bypass lintian warnings.
+--- a/markpado/markpado.desktop
++++ b/markpado/markpado.desktop
+@@ -2,10 +2,10 @@
+ Name=Markpado
+ Name[zh_CN]=Markpado
+ Name[zh_TW]=Markpado
+-Exec=markpado
++Exec=markpado %F
+ Icon=markpado
+ Type=Application
+-Mimetype=text/markdown;
++MimeType=text/markdown;
+ Categories=KDE;Utility;TextEditor;
+ GenericName=Markdown Editor
+ GenericName[zh_CN]=Markdown 编辑器

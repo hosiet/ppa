@@ -1,0 +1,12 @@
+Fix desktop file to bypass lintian warnings.
+--- a/marknoto/marknoto.desktop
++++ b/marknoto/marknoto.desktop
+@@ -2,7 +2,7 @@
+ Name=Marknoto
+ Name[zh_CN]=Marknoto
+ Name[zh_TW]=Marknoto
+-Exec=marknoto
++Exec=marknoto %F
+ Icon=marknoto
+ Type=Application
+ MimeType=text/markdown;
