@@ -1,0 +1,129 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Build Debian packages, selectively or fully.
+"""
+
+__license__ = 'MIT'
+__docformat__ = 'reStructuredText'
+__version__ = '0.0.1'
+
+import logging
+
+DEB_PACKAGE_LIST = [
+        'shadowsocks-libev',
+        'eric',
+        'binfmt-wine',
+        'libmdcpp',
+        'marketo',
+        'nixnote2',
+        ];
+SIGN_GPG_KEY = '3B244E51'
+BUILD_DIR = 'debuild'
+
+# Simple logger
+logger = logging.getLogger('buildpkg')
+logger_console_handler = logging.StreamHandler()
+logger_formatter = logging.Formatter(
+        '%(asctime)s - %(levelname)s - %(message)s')
+
+def pkg_process(pkglist: list, builddir: str, verbose=True):
+    """Initialize all the building process.
+
+    Work still in progress.
+
+    The process is as follows:
+
+        1. chdir into builddir.
+        2. trigger pkgname/debian/rules get-orig-source.
+            The original tarball is thus downloaded and placed in builddir.
+        3. chdir into pkgname dir.
+        4. execute debuild and finish the build process.
+        5. return to phase 1 and finish another package.
+
+    :param pkglist: The list of packages to process.
+    :type pkglist: list.
+    :param builddir: The working directory while building.
+    :type builddir: str.
+    :param verbose: Indicate whether to print debuild output to stdout.
+    :type verbose: bool.
+    """
+    logger.info('final pkglist is {}.'.format(pkglist))
+    import os
+    import sys
+    _oldcwd = os.getcwd()
+    os.chdir(builddir)
+    try:
+        _cwd = os.getcwd()
+        dirlist = os.listdir('.')
+        for i in pkglist:
+            target_dirlist = [ x for x in dirlist if x.startswith(i) ]
+            if len(target_dirlist) >= 2:
+                # XXX: Name may be ambiguous, but ignored here
+                pass
+            elif len(target_dirlist) <= 0:
+                raise Exception('specified package not found')
+            for j in target_dirlist:
+
+                # TODO: call debian/rules get-orig-source here
+
+                os.chdir(j)
+                try:
+                    # TODO: call debuild here
+                    pass
+                finally:
+                    os.chdir(_cwd)
+    finally:
+        os.chdir(_oldcwd)
+
+    pass
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(
+            description="deb package builder",
+            epilog="Use with caution.")
+    parser.add_argument(
+            '-V', '--version',
+            help='show utility version',
+            action='version',
+            version='{}'.format(__version__))
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
+            '-v', '--verbose',
+            help='show debuild output and debug info',
+            action='store_true',
+            )
+    group.add_argument(
+            '-q', '--quiet',
+            help='do not show debuild output and debug info',
+            action='store_false',
+            )
+    parser.add_argument(
+            '-l', '--list',
+            help='only build packages in the list',
+            action='store_true',
+            default=False)
+    parser.add_argument(
+            '-d', '--builddir',
+            help='working directory while building',
+            default=BUILD_DIR)
+    parser.add_argument(
+            'pkglist',
+            nargs=argparse.REMAINDER,
+            help='packages to be built')
+    args = parser.parse_args()
+    if args.verbose:
+        logger.setLevel(logging.DEBUG)
+        logger_console_handler.setLevel(logging.DEBUG)
+    else:
+        logger.setLevel(logging.INFO)
+        logger_console_handler.setLevel(logging.INFO)
+    logger_console_handler.setFormatter(logger_formatter)
+    logger.addHandler(logger_console_handler)
+    logger.debug('Received arguments: {}.'.format(repr(args)))
+    pkg_process(
+            pkglist = [ x for x in (DEB_PACKAGE_LIST if args.list else args.pkglist) if not x.startswith('-')],
+            builddir = args.builddir,
+            verbose = args.verbose)
