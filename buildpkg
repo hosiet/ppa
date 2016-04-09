@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# buildpkg - Build debian package with debian dir and get-orig-source target
+#
+# 2016, Boyuan Yang <073plan@gmail.com>
+#
+# To the extent possible under law, Boyuan Yang has waived all copyright and
+# related or neighboring rights to buildpkg.
+# This work is published from: China Mainland.
+
 """
 Build Debian packages, selectively or fully.
 """
 
-__license__ = 'MIT'
+__license__ = 'CC0'
 __docformat__ = 'reStructuredText'
 __version__ = '0.0.1'
 
