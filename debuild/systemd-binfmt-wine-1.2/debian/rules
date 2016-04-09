@@ -2,8 +2,6 @@
 # See debhelper(7) (uncomment to enable)
 # output every command that modifies files on the build system.
 #export DH_VERBOSE = 1
-_PKGNAME=$(shell dpkg-parsechangelog | grep '^Source: ' | grep -o ' .*' | cut -b2-)
-_VERSION=$(shell dpkg-parsechangelog | sed -rne 's,^Version: ([^-+~]+).*,\1,p')
 
 # see EXAMPLES in dpkg-buildflags(1) and read /usr/share/dpkg/*
 DPKG_EXPORT_BUILDFLAGS = 1
@@ -32,6 +30,12 @@ include /usr/share/dpkg/default.mk
 override_dh_systemd_start:
 	dh_systemd_start --restart-after-upgrade systemd-binfmt.service
 
+PKD  = $(abspath $(dir $(shell echo $(MAKEFILE_LIST) | cut -d' ' -f1)))
+PKG  = $(shell dpkg-parsechangelog -l$(PKD)/changelog --show-field=Source)
+VER ?= $(shell dpkg-parsechangelog -l$(PKD)/changelog | perl -ne 'print $$1 if m{^Version:\s+(?:\d+:)?(\d.*)(?:\-\d+.*)};')
+
+.PHONY: get-orig-source
+## http://wiki.debian.org/onlyjob/get-orig-source
 get-orig-source:
-	tar --exclude=debian -czf ../$(_PKGNAME)_$(_VERSION).orig.tar.gz .
+	tar --exclude=debian -czf ./$(PKG)_$(VER).orig.tar.gz $(PKG)-$(VER)
 

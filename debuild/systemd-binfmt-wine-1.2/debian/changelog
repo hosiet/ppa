@@ -1,0 +1,11 @@
+systemd-binfmt-wine (1.2-2) unstable; urgency=low
+
+  * Change pkgname into systemd-binfmt-wine for clarification
+
+ -- Boyuan Yang <073plan@gmail.com>  Sat, 09 Apr 2016 20:54:32 +0800
+
+binfmt-wine (1.2-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Boyuan Yang <073plan@gmail.com>  Sun, 28 Feb 2016 21:55:45 +0800

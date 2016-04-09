@@ -38,7 +38,7 @@ override_dh_installinit:
 	dh $@  --with systemd
 
 PKD  = $(abspath $(dir $(shell echo $(MAKEFILE_LIST) | cut -d' ' -f1)))
-PKG  = $(word 2,$(shell dpkg-parsechangelog -l$(PKD)/changelog --show-field=Source))
+PKG  = $(shell dpkg-parsechangelog -l$(PKD)/changelog --show-field=Source)
 VER ?= $(shell dpkg-parsechangelog -l$(PKD)/changelog | perl -ne 'print $$1 if m{^Version:\s+(?:\d+:)?(\d.*)(?:\-\d+.*)};')
 
 .PHONY: get-orig-source

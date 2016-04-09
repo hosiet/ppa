@@ -1,5 +1,5 @@
 #!/bin/sh
-# postinst script for binfmt-wine
+# postinst script for systemd-binfmt-wine
 #
 # see: dh_installdeb(1)
 
