@@ -1,3 +1,11 @@
+eric (6.1.4-0.1) unstable; urgency=low
+
+  * Non-Maintainer upload
+  * New upstream release
+    - Various bugfixes
+
+ -- Boyuan Yang <073plan@gmail.com>  Sat, 09 Apr 2016 22:28:42 +0800
+
 eric (6.1.3-0.2) unstable; urgency=low
 
   * Non-maintainer upload

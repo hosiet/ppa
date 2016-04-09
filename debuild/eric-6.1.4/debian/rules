@@ -56,11 +56,19 @@ override_dh_clean:
 	find . -name __pycache__ -prune | xargs rm -rf
 	dh_clean *.pyc Ui_* __pycache__ eric6config.py
 
+PKD  = $(abspath $(dir $(shell echo $(MAKEFILE_LIST) | cut -d' ' -f1)))
+PKG  = $(shell dpkg-parsechangelog -l$(PKD)/changelog --show-field=Source)
+VER ?= $(shell dpkg-parsechangelog -l$(PKD)/changelog | perl -ne 'print $$1 if m{^Version:\s+(?:\d+:)?(\d.*)(?:\-\d+.*)};')
+
+.PHONY: get-orig-source
+## http://wiki.debian.org/onlyjob/get-orig-source
 get-orig-source:
-	VER=$(shell dpkg-parsechangelog | sed -rne 's,^Version: ([^-+~]+).*,\1,p');\
 	set -e;\
-	wget -q http://sourceforge.net/projects/eric-ide/files/eric6/stable/$$VER/eric6-$$VER.tar.gz/download\
-	 -O eric_$$VER.orig.tar.gz; \
+	_TEMPDIR=$(PKG)_temp;\
+	mkdir $$_TEMPDIR;\
+	cd $$_TEMPDIR;\
+	wget -q http://sourceforge.net/projects/eric-ide/files/eric6/stable/$(VER)/eric6-$(VER).tar.gz/download\
+	 -O eric_$(VER).orig.tar.gz;\
 	tar -xz --exclude=eric/DebugClients/Python/coverage/htmlfiles/jquery.tablesorter.min.js \
 		--exclude=eric/DebugClients/Python/coverage/htmlfiles/jquery.min.js \
 		--exclude=eric/DebugClients/Python/coverage/htmlfiles/coverage_html.js \
@@ -73,14 +81,13 @@ get-orig-source:
 		--exclude=eric/DebugClients/Python3/coverage/htmlfiles/jquery.hotkeys.js \
 		--exclude=eric/Helpviewer/data/javascript/jquery.js \
 		--exclude=eric/Helpviewer/data/javascript/jquery-ui.js \
-		-f eric_$$VER.orig.tar.gz; \
+		-f eric_$(VER).orig.tar.gz;\
 	for L in ${_LANG}; do\
-	 wget -q http://sourceforge.net/projects/eric-ide/files/eric6/stable/$$VER/eric6-i18n-$$L-$$VER.tar.gz/download\
-	  -O eric_$$VER.orig-transl-$$L.tar.gz;\
-	 tar --overwrite -xz -f eric_$$VER.orig-transl-$$L.tar.gz;\
+	 wget -q http://sourceforge.net/projects/eric-ide/files/eric6/stable/$(VER)/eric6-i18n-$$L-$(VER).tar.gz/download\
+	  -O eric_$(VER).orig-transl-$$L.tar.gz;\
+	 tar --overwrite -xz -f eric_$(VER).orig-transl-$$L.tar.gz;\
 	done;\
-	mv eric6-$$VER eric-$$VER; \
-	tar -czf ../eric_$$VER.orig.tar.gz eric-$$VER; \
-	rm -f eric*.tar.gz; \
-	mv eric-$$VER/* .; \
-	rm -rf eric-$$VER;
+	mv eric6-$(VER) eric-$(VER);\
+	tar -czf ../eric_$(VER).orig.tar.gz eric-$(VER);\
+	cd ..;\
+	rm -rf $$_TEMPDIR;

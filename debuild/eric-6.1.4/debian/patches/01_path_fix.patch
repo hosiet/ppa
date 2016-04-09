@@ -3,8 +3,8 @@ Fixes paths and toolname extensions.
 --- a/eric/Preferences/__init__.py
 +++ b/eric/Preferences/__init__.py
 @@ -692,13 +692,13 @@
+     # defaults for the help settings
      helpDefaults = {
-         "HelpViewerType": 1,      # this corresponds with the radio button id
          "CustomViewer": "",
 -        "PythonDocDir": "",
 -        "Python2DocDir": "",

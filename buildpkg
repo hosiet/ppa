@@ -30,6 +30,7 @@ DEB_PACKAGE_LIST = [
 PREPARE_COMMAND = {
         'shadowsocks-libev': 'cd ..; tar --exclude=debian -xvf ./shadowsocks-libev_*.orig.tar.gz; cd -',
         'systemd-binfmt-wine': ';',
+        'eric': 'cd ..; tar --exclude=debian -xvf ./eric_*.orig.tar.gz; cd -',
         }
 SIGNING_GPG_KEY = '3B244E51'
 BUILD_DIR = 'debuild'
