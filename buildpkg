@@ -19,7 +19,10 @@ DEB_PACKAGE_LIST = [
         'marketo',
         'nixnote2',
         ];
-SIGN_GPG_KEY = '3B244E51'
+PREPARE_COMMAND = {
+        'shadowsocks-libev': 'cd ..; tar --exclude=debian -xvf ./shadowsocks-libev_*.orig.tar.gz; cd -'
+        }
+SIGNING_GPG_KEY = '3B244E51'
 BUILD_DIR = 'debuild'
 
 # Simple logger
@@ -49,6 +52,14 @@ def pkg_process(pkglist: list, builddir: str, verbose=True):
     :param verbose: Indicate whether to print debuild output to stdout.
     :type verbose: bool.
     """
+
+    def PREPARE(pkgname: str):
+        """Finish prepare stage before debuild.
+
+        NOTE: The working dir is already in the pkgname dir.
+        """
+        return PREPARE_COMMAND[pkgname]
+
     logger.info('final pkglist is {}.'.format(pkglist))
     import os
     import sys
@@ -65,13 +76,16 @@ def pkg_process(pkglist: list, builddir: str, verbose=True):
             elif len(target_dirlist) <= 0:
                 raise Exception('specified package not found')
             for j in target_dirlist:
-
-                # TODO: call debian/rules get-orig-source here
-
+                # XXX: using os.system(), needs a better non-blocking solution
+                os.system('{}/debian/rules get-orig-source'.format(j))
                 os.chdir(j)
+                # Extract original tarball
+                # TODO: Unify PREPARE() stage as shadowsocks-libev
+                os.system(PREPARE(i))
                 try:
-                    # TODO: call debuild here
-                    pass
+                    # XXX: using os.system(), needs a better non-blocking solution
+                    # TODO: Deal with gpg key problem
+                    os.system('debuild -tc -i -k{}'.format(SIGNING_GPG_KEY))
                 finally:
                     os.chdir(_cwd)
     finally:
