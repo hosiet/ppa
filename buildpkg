@@ -14,13 +14,14 @@ import logging
 DEB_PACKAGE_LIST = [
         'shadowsocks-libev',
         'eric',
-        'binfmt-wine',
+        'systemd-binfmt-wine',
         'libmdcpp',
         'marketo',
         'nixnote2',
         ];
 PREPARE_COMMAND = {
-        'shadowsocks-libev': 'cd ..; tar --exclude=debian -xvf ./shadowsocks-libev_*.orig.tar.gz; cd -'
+        'shadowsocks-libev': 'cd ..; tar --exclude=debian -xvf ./shadowsocks-libev_*.orig.tar.gz; cd -',
+        'systemd-binfmt-wine': ';',
         }
 SIGNING_GPG_KEY = '3B244E51'
 BUILD_DIR = 'debuild'
