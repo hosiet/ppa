@@ -1,0 +1,138 @@
+telegram-desktop-bin (0.9.40-1) unstable; urgency=medium
+
+  * New upstream release 0.9.40 (05.04.16)
+    - Visual improvements
+
+ -- Boyuan Yang <073plan@gmail.com>  Sun, 10 Apr 2016 07:19:23 +0800
+
+telegram (0.9.35-0ubuntu1) wily; urgency=medium
+
+  * New upstrem release 0.9.35 (25.03.16)
+  * - Design improvements
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Mon, 28 Mar 2016 09:10:00 +0200
+
+telegram (0.9.28-0ubuntu0) wily; urgency=medium
+
+  * New upstream relsease 0.9.28 (26.02.16)
+  * - Edit your messages in channels and supergroups
+  * - Share links to specific posts in channels via the post context menu
+  * - Add admin signatures to messages in channels
+  * - Send silent messages in channels that will not notify members, useful for non-urgent or late night posting
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Wed, 09 Mar 2016 21:01:02 +0100
+
+telegram (0.9.24-0ubuntu0) wily; urgency=medium
+
+  * New upstream release 0.9.24 (16.02.16)
+  * - New waveform visualizations for voice messages
+  * - Sticker suggestions when you type an emoji
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 21 Feb 2016 10:26:25 +0100
+
+telegram (0.8.7-0ubuntu0) trusty; urgency=medium
+
+  * New upstream release 0.8.7 (24.04.15)
+  * - New photo viewer design
+  * - Switch between files in the photo viewer
+  * - Grouped notifications when several messages are forwarded
+  * - New default chat background image (you can change it in Settings)
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sat, 25 Apr 2015 07:42:25 +0200
+
+telegram (0.8.4-0ubuntu0) trusty; urgency=medium
+
+  * New upstream release 0.8.4 (13.04.15)
+  * - Link preview layout bug fix 
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Thu, 16 Apr 2015 21:00:05 +0200
+
+telegram (0.8.3-0ubuntu0) trusty; urgency=medium
+
+  * New upstream release 0.8.3 (08.04.15)
+  * - Link previews for Twitter, YouTube, Instagram and certain other links
+  * - Two-step verification
+  * - View all your Telegram sessions, terminate specific sessions  
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 12 Apr 2015 22:03:22 +0200
+
+telegram (0.8.0-0ubuntu0) trusty; urgency=medium
+
+  * New upstream release 0.8.0 (26.03.15)
+  * - Add a comment before forwarded messages
+  * - Hashtags suggestions in new message and search fields (based on recent searches)
+  * - Button to jump back to a reply after viewing the original message
+  * - Add people to groups by username
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sat, 28 Mar 2015 07:13:03 +0100
+
+telegram (0.7.17-0ubuntu0) trusty; urgency=medium
+
+  * New upstream release 0.7.17 (20.02.15)
+  * - Some minor improvements.
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 01 Mar 2015 19:15:37 +0100
+
+telegram (0.7.13-0ubuntu0) trusty; urgency=medium
+
+  * New upstream release 0.7.13 (10.02.15):
+  *  - You can now change the chat background.
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sat, 14 Feb 2015 09:34:26 +0100
+
+telegram (0.7.10-0ubuntu0) trusty; urgency=medium
+
+  * New upstream release 0.7.10 (29.01.15):
+  *  - Bug fixes and minor improvements.
+  *  - Online updated only while current window is active.
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Mon, 02 Feb 2015 06:15:28 +0100
+
+telegram (0.7.9-0ubuntu0) trusty; urgency=medium
+
+  * New upstream release 0.7.9 (16.01.15):
+  *  - Added Korean language.
+  *  - Quick «open with» menu on Windows and OSX.
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sat, 24 Jan 2015 21:29:05 +0100
+
+telegram (0.7.8-0ubuntu0) trusty; urgency=medium
+
+  *  New upstream release 0.7.8 (19.01.15):
+  *  - Some graphics changed.
+  *  - Windows: when activating window by click selection is not cleared.
+  *  - Linux: tray icon and unity launcher counter support improved.
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sat, 24 Jan 2015 21:27:55 +0100
+
+telegram (0.7.7-0ubuntu0) trusty; urgency=medium
+
+  * New upstream release 0.7.7 (16.01.15):
+  *  - Windows: system sleep / hibernation fixed when app is running.
+  *  - Mac OS X: crashes on OS X 10.7 and 10.8 fixed.
+  *  - Linux: tray icon support and unity launcher counter for unread messages added in Ubuntu.
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Fri, 16 Jan 2015 19:56:15 +0100
+
+telegram (0.7.6-0ubuntu0) trusty; urgency=medium
+
+  * New upstream release 0.7.6 (06.01.15):
+  *   - Some improvements for stickers.
+  *   - Some translation improvements.
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 13 Jan 2015 05:24:57 +0100
+
+telegram (0.7.5-0ubuntu0) trusty; urgency=medium
+
+  * New upstream release 0.7.5 (03.01.15):
+  *   - Stickers support.
+  *   - Local caching for voice messages.
+  *   - Added Portuguese language.
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sat, 03 Jan 2015 19:23:10 +0100
+
+telegram (0.7.4-0ubuntu0) trusty; urgency=medium
+
+  * New upstream release.
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sat, 27 Dec 2014 22:28:16 +0100

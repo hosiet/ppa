@@ -1,0 +1,16 @@
+Source: telegram-desktop-bin
+Section: utils
+Priority: optional
+Build-Depends: debhelper (>= 9)
+Maintainer: Boyuan Yang <073plan@gmail.com>
+Standards-Version: 3.9.7
+Homepage: https://desktop.telegram.org
+Vcs-Git: https://github.com/telegramdesktop/tdesktop.git
+Vcs-Browser: https://github.com/telegramdesktop/tdesktop
+
+Package: telegram-desktop-bin
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Telegram Desktop
+ Cloud-based mobile and desktop messaging app with focus on
+ security and speed.

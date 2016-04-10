@@ -1,0 +1,9 @@
+telegram-desktop-bin for Debian
+----------------------
+
+This is the binary version provided by upstream, with most libraries
+statically linked.
+
+The Updater program was dropped, since it is useless in deb package.
+
+ -- Boyuan Yang <073plan@gmail.com>  Sun, 10 Apr 2016 07:18:50 +0800

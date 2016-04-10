@@ -26,11 +26,13 @@ DEB_PACKAGE_LIST = [
         'libmdcpp',
         'marketo',
         'nixnote2',
+        'telegram-desktop-bin',
         ];
 PREPARE_COMMAND = {
         'shadowsocks-libev': 'cd ..; tar --exclude=debian -xvf ./shadowsocks-libev_*.orig.tar.gz; cd -',
         'systemd-binfmt-wine': ';',
         'eric': 'cd ..; tar --exclude=debian -xvf ./eric_*.orig.tar.gz; cd -',
+        'telegram-desktop-bin': 'cd ..; tar -xvf ./telegram-desktop-bin_*.orig.tar.gz; cd -',
         }
 SIGNING_GPG_KEY = '3B244E51'
 BUILD_DIR = 'debuild'
