@@ -2,7 +2,7 @@
 # -*- makefile -*-
 
 %:
-	dh $@ --with python3 --buildsystem=python_distutils
+	dh $@ --with python3 --buildsystem=pybuild
 
 PKD  = $(abspath $(dir $(shell echo $(MAKEFILE_LIST) | cut -d' ' -f1)))
 PKG  = $(shell dpkg-parsechangelog -l$(PKD)/changelog --show-field=Source)
