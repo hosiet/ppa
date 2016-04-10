@@ -1,0 +1,11 @@
+shadowsocks (2.8.2-0.1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Boyuan Yang <073plan@gmail.com>  Sun, 10 Apr 2016 10:48:23 +0800
+
+shadowsocks (2.1.0-1) unstable; urgency=low
+
+  * Initial release (Closes: #758900)
+
+ -- Shell.Xu <shell909090@gmail.com>  Sat, 23 Aug 2014 00:56:04 +0800
