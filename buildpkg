@@ -19,6 +19,7 @@ __version__ = '0.0.1'
 
 import logging
 
+BUILDDIRNAME = 'build'
 DEB_PACKAGE_LIST = [
         'shadowsocks-libev',
         'eric',
@@ -35,8 +36,11 @@ PREPARE_COMMAND = {
         'telegram-desktop-bin': 'cd ..; tar -xvf ./telegram-desktop-bin_*.orig.tar.gz; cd -',
         'shadowsocks': 'cd ..; tar --exclude=debian -xvf ./shadowsocks_*.orig.tar.gz; cd -',
         }
+PREPARE_PASS = ['systemd-binfmt-wine']
+PREPARE_DPKG_SOURCE = 'rm -rf ./{builddirname}; dpkg-source -b ./{dirname}; dpkg-source -x ./{dscfilename} "./{builddirname}";'
 SIGNING_GPG_KEY = '3B244E51'
 BUILD_DIR = 'debuild'
+# XXX: bad shell usage
 
 # Simple logger
 logger = logging.getLogger('buildpkg')
@@ -66,12 +70,27 @@ def pkg_process(pkglist: list, builddir: str, verbose=True):
     :type verbose: bool.
     """
 
-    def PREPARE(pkgname: str):
+    def PREPARE(dirname: str):
         """Finish prepare stage before debuild.
 
         NOTE: The working dir is already in the pkgname dir.
         """
-        return PREPARE_COMMAND[pkgname]
+        def SHOULD_PREPARE_PASS(dirname):
+            return False
+            for i in PREPARE_PASS:
+                if i in dirname:
+                    return True
+            return False
+
+        if SHOULD_PREPARE_PASS(dirname):
+            return 'true'
+        else:
+            return PREPARE_DPKG_SOURCE.format(
+                    dirname=dirname,
+                    builddirname=BUILDDIRNAME,
+                    dscfilename='{}-*.dsc'.format(dirname[::-1].replace('-', '_', 1)[::-1])
+                    )
+        pass
 
     logger.info('final pkglist is {}.'.format(pkglist))
     import os
@@ -91,13 +110,14 @@ def pkg_process(pkglist: list, builddir: str, verbose=True):
             for j in target_dirlist:
                 # XXX: using os.system(), needs a better non-blocking solution
                 os.system('{}/debian/rules get-orig-source'.format(j))
-                os.chdir(j)
+                ####os.chdir(j)
                 # Extract original tarball
                 # TODO: Unify PREPARE() stage as shadowsocks-libev
-                os.system(PREPARE(i))
+                os.system(PREPARE(j))
                 try:
                     # XXX: using os.system(), needs a better non-blocking solution
                     # TODO: Deal with gpg key problem
+                    os.chdir(BUILDDIRNAME)
                     os.system('debuild -tc -i -k{}'.format(SIGNING_GPG_KEY))
                 finally:
                     os.chdir(_cwd)
