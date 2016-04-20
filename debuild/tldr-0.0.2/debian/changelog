@@ -1,0 +1,5 @@
+tldr (0.0.2-0.1) unstable; urgency=low
+
+  * Initial package for debian.
+
+ -- Boyuan Yang <073plan@gmail.com>  Wed, 20 Apr 2016 21:54:44 +0800

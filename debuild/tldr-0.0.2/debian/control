@@ -1,0 +1,15 @@
+Source: tldr
+Section: doc
+Priority: optional
+Maintainer: Boyuan Yang <073plan@gmail.com>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.7
+Homepage: https://tldr-pages.github.io
+Vcs-Git: https://github.com/tldr-pages/tldr.git
+Vcs-Browser: https://github.com/tldr-pages/tldr
+
+Package: tldr-pages
+Architecture: all
+Depends: ${misc:Depends}
+Description: Simplified and community-driven man pages
+ A collection of simplified and community-driven man pages.
