@@ -29,14 +29,6 @@ DEB_PACKAGE_LIST = [
         'nixnote2',
         'telegram-desktop-bin',
         ];
-PREPARE_COMMAND = {
-        'shadowsocks-libev': 'cd ..; tar --exclude=debian -xvf ./shadowsocks-libev_*.orig.tar.gz; cd -',
-        'systemd-binfmt-wine': ';',
-        'eric': 'cd ..; tar --exclude=debian -xvf ./eric_*.orig.tar.gz; cd -',
-        'telegram-desktop-bin': 'cd ..; tar -xvf ./telegram-desktop-bin_*.orig.tar.gz; cd -',
-        'shadowsocks': 'cd ..; tar --exclude=debian -xvf ./shadowsocks_*.orig.tar.gz; cd -',
-        }
-PREPARE_PASS = ['systemd-binfmt-wine']
 PREPARE_DPKG_SOURCE = 'rm -rf ./{builddirname}; dpkg-source -b ./{dirname}; dpkg-source -x ./{dscfilename} "./{builddirname}";'
 SIGNING_GPG_KEY = '3B244E51'
 BUILD_DIR = 'debuild'
@@ -73,24 +65,13 @@ def pkg_process(pkglist: list, builddir: str, verbose=True):
     def PREPARE(dirname: str):
         """Finish prepare stage before debuild.
 
-        NOTE: The working dir is already in the pkgname dir.
+        Calling dpkg-source here.
         """
-        def SHOULD_PREPARE_PASS(dirname):
-            return False
-            for i in PREPARE_PASS:
-                if i in dirname:
-                    return True
-            return False
-
-        if SHOULD_PREPARE_PASS(dirname):
-            return 'true'
-        else:
-            return PREPARE_DPKG_SOURCE.format(
-                    dirname=dirname,
-                    builddirname=BUILDDIRNAME,
-                    dscfilename='{}-*.dsc'.format(dirname[::-1].replace('-', '_', 1)[::-1])
-                    )
-        pass
+        return PREPARE_DPKG_SOURCE.format(
+                dirname=dirname,
+                builddirname=BUILDDIRNAME,
+                dscfilename='{}-*.dsc'.format(dirname[::-1].replace('-', '_', 1)[::-1])
+                )
 
     logger.info('final pkglist is {}.'.format(pkglist))
     import os
