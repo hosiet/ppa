@@ -2,7 +2,10 @@ Source: tldr
 Section: doc
 Priority: optional
 Maintainer: Boyuan Yang <073plan@gmail.com>
-Build-Depends: debhelper (>= 9)
+Build-Depends: debhelper (>= 9),
+               dh-python,
+               python-all (>=2.6.6-3~),
+               python-setuptools-scm
 Standards-Version: 3.9.7
 Homepage: https://tldr-pages.github.io
 Vcs-Git: https://github.com/tldr-pages/tldr.git
@@ -13,3 +16,20 @@ Architecture: all
 Depends: ${misc:Depends}
 Description: Simplified and community-driven man pages
  A collection of simplified and community-driven man pages.
+ .
+ This package contains only markdown pages.
+
+Package: python-tldr
+Architecture: all
+Section: python
+Depends: ${misc:Depends}, ${Python:Depends},
+         python-termcolor,
+         python-six,
+         python-colorama,
+         tldr-pages
+Provides: tldr
+Conflicts: tldr
+Description: Simplified and community-driven man pages
+ A collection of simplified and community-driven man pages.
+ .
+ This package provides a python-based cli frontend.

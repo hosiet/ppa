@@ -1,0 +1,43 @@
+--- a/tldr.py
++++ b/tldr.py
+@@ -15,6 +15,10 @@
+ import colorama
+ colorama.init()
+ 
++try:
++    FileNotFoundError
++except NameError:
++    FileNotFoundError = IOError
+ 
+ def get_terminal_size():
+     def get_terminal_size_windows():
+@@ -104,14 +108,12 @@
+ 
+ 
+ def get_page_for_platform(command, platform):
+-    page_url = remote + "/" + platform + "/" + quote(command) + ".md"
++    page_path = '/usr/share/tldr/pages/'+str(platform)+'/'+str(command)+'.md'
+     try:
+-        data = urlopen(page_url).read()
++        f = open(page_path, 'r')
+     except Exception:
+-        data = load_page_from_cache(command, platform)
+-        if data is None:
+-            raise
+-    store_page_to_cache(data, command, platform)
++        raise
++    data = f.read()
+     return data.splitlines()
+ 
+ 
+@@ -128,8 +130,8 @@
+     for _platform in platform:
+         try:
+             return get_page_for_platform(command, _platform)
+-        except HTTPError as e:
+-            if e.code != 404:
++        except Exception as e:
++            if not isinstance(e, FileNotFoundError):
+                 raise
+ 
+     print(command + " documentation is not available\n"

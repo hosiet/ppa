@@ -11,21 +11,25 @@
 # build-arch and build-indep targets  by Bill Allombert 2001
 
 # Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
+export DH_VERBOSE=1
 
 # This has to be exported to make some magic below work.
 export DH_OPTIONS
+
+# Used by pybuild
+export PYBUILD_NAME=tldr
 
 # Enable Multi-Arch support.
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 %:
-	dh $@
+	dh $@ --with python2 --buildsystem=pybuild
 
 PKD  = $(abspath $(dir $(shell echo $(MAKEFILE_LIST) | cut -d' ' -f1)))
 PKG  = $(shell dpkg-parsechangelog -l$(PKD)/changelog --show-field=Source)
 VER ?= $(shell dpkg-parsechangelog -l$(PKD)/changelog | perl -ne 'print $$1 if m{^Version:\s+(?:\d+:)?(\d.*)(?:\-\d+.*)};')
 GIT_ADDR_PAGES = https://github.com/tldr-pages/tldr.git
+CLIENT_TARGZ = https://pypi.python.org/packages/source/t/tldr/tldr-0.2.tar.gz
 
 .PHONY: get-orig-source
 ## http://wiki.debian.org/onlyjob/get-orig-source
@@ -37,8 +41,9 @@ get-orig-source:  $(info I: $(PKG)_$(VER))
 	tar -czvf ../$(PKG)_$(VER).orig-tldr.tar.gz tldr; \
 	echo $$PWD; \
 	[ ! "x$${PWD}" = "x/" ] && rm -rf ./*; \
-	mkdir $(PKG)-$(VER); \
+	wget $(CLIENT_TARGZ); \
+	tar -xvf ./$(shell basename $(CLIENT_TARGZ)); \
+	rm -f ./$(shell basename $(CLIENT_TARGZ)); \
+	mv ./* $(PKG)-$(VER); \
 	tar -czvf ../$(PKG)_$(VER).orig.tar.gz $(PKG)-$(VER); \
-	cd ..; rm -r $(PKG)_temp;
-
-
+	cd ..; rm -rf $(PKG)_temp;
