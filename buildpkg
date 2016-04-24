@@ -28,6 +28,7 @@ DEB_PACKAGE_LIST = [
         'marketo',
         'nixnote2',
         'telegram-desktop-bin',
+        'tldr',
         ];
 PREPARE_DPKG_SOURCE = 'rm -rf ./{builddirname}; dpkg-source -b ./{dirname}; dpkg-source -x ./{dscfilename} "./{builddirname}";'
 SIGNING_GPG_KEY = '3B244E51'
