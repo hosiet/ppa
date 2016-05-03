@@ -4,7 +4,6 @@ Priority: extra
 Maintainer: Boyuan Yang <073plan@gmail.com>
 Build-Depends: debhelper (>= 9),
                dh-python,
-               dh-python3,
                python3-all (>= 3.2),
                python3-setuptools,
                python-all (>= 2.6.6-3~),
@@ -23,8 +22,8 @@ Depends: ${misc:Depends}, ${python3:Depends}, python3-pkg-resources
 Description: Fast tunnel proxy that helps you bypass firewalls
  A secure socks5 proxy, designed to protect your Internet traffic.
  .
- This package contain local and server part of shadowsocks, a fast,
- powerful tunnel proxy to bypass firewalls.
+ This package contains local and server tool of shadowsocks and
+ the python3 package.
 
 Package: python-shadowsocks
 Architecture: all
@@ -33,5 +32,4 @@ Depends: ${misc:Depends}, ${python:Depends}, python-pkg-resources
 Description: Fast tunnel proxy that helps you bypass firewalls
  A secure socks5 proxy, designed to protect your Internet traffic.
  .
- This package contain local and server part of shadowsocks, a fast,
- powerful tunnel proxy to bypass firewalls.
+ This package contains python2 package only.

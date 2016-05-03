@@ -4,7 +4,7 @@ Source: https://github.com/shadowsocks/shadowsocks
 
 Files: debian/*
 Copyright: 2014 Shell.Xu <shell909090@gmail.com>
-           2016 Boyuan Yang <073plan@gmail.com.
+           2016 Boyuan Yang <073plan@gmail.com>
 License: Expat
 
 Files: *
