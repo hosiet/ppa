@@ -41,7 +41,7 @@ logger_console_handler = logging.StreamHandler()
 logger_formatter = logging.Formatter(
         '%(asctime)s - %(levelname)s - %(message)s')
 
-def pkg_process(pkglist: list, builddir: str, verbose=True):
+def pkg_process(pkglist: list, builddir: str, verbose=True, prepare_only=False):
     """Initialize all the building process.
 
     Work still in progress.
@@ -97,10 +97,13 @@ def pkg_process(pkglist: list, builddir: str, verbose=True):
                 # TODO: Unify PREPARE() stage as shadowsocks-libev
                 os.system(PREPARE(j))
                 try:
-                    # XXX: using os.system(), needs a better non-blocking solution
-                    # TODO: Deal with gpg key problem
-                    os.chdir(BUILDDIRNAME)
-                    os.system('debuild -tc -i -k{}'.format(SIGNING_GPG_KEY))
+                    if prepare_only:
+                        pass
+                    else:
+                        # XXX: using os.system(), needs a better non-blocking solution
+                        # TODO: Deal with gpg key problem
+                        os.chdir(BUILDDIRNAME)
+                        os.system('debuild -tc -i -k{}'.format(SIGNING_GPG_KEY))
                 finally:
                     os.chdir(_cwd)
     finally:
@@ -135,6 +138,12 @@ if __name__ == "__main__":
             action='store_true',
             default=False)
     parser.add_argument(
+            '-p', '--prepare',
+            help='only prepare .dsc files, do not invoke debuild',
+            action='store_true',
+            default=False,
+            )
+    parser.add_argument(
             '-d', '--builddir',
             help='working directory while building',
             default=BUILD_DIR)
@@ -155,4 +164,6 @@ if __name__ == "__main__":
     pkg_process(
             pkglist = [ x for x in (DEB_PACKAGE_LIST if args.list else args.pkglist) if not x.startswith('-')],
             builddir = args.builddir,
-            verbose = args.verbose)
+            verbose = args.verbose,
+            prepare_only = args.prepare,
+            )
