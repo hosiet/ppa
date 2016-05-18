@@ -1,0 +1,46 @@
+Description: Temp fix for linux 4.5
+ A temp patch to build on linux 4.5. Should be dropped when ss-libev 2.4.7
+ released.
+ .
+ shadowsocks-libev (2.4.6-1.1) unstable; urgency=medium
+ .
+   * Non-maintainer upload.
+   * merge upstream debian pkgscripts
+   * fix lintian warnings.
+Author: Boyuan Yang <073plan@gmail.com>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: https://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- shadowsocks-libev-2.4.6.orig/configure
++++ shadowsocks-libev-2.4.6/configure
+@@ -14464,7 +14464,7 @@ ac_fn_c_check_header_compile "$LINENO" "
+     #include <netinet/in.h>
+     #endif
+     #if HAVE_LINUX_IF_H
+-    #include <net/if.h>
++    #include <linux/if.h>
+     #endif
+     #if HAVE_SYS_SOCKET_H
+     #include <sys/socket.h>
+--- shadowsocks-libev-2.4.6.orig/configure.ac
++++ shadowsocks-libev-2.4.6/configure.ac
+@@ -205,7 +205,7 @@ case $host in
+     #include <netinet/in.h>
+     #endif
+     #if HAVE_LINUX_IF_H
+-    #include <net/if.h>
++    #include <linux/if.h>
+     #endif
+     #if HAVE_SYS_SOCKET_H
+     #include <sys/socket.h>

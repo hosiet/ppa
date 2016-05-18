@@ -26,7 +26,7 @@ export DH_OPTIONS
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 override_dh_strip:
-	dh_strip -- --dbg-package=libshadowsocks-dbg
+	dh_strip
 	sed -i "/dependency_libs/ s/'.*'/''/" `find . -name '*.la'`
 
 override_dh_auto_configure:
@@ -34,7 +34,7 @@ override_dh_auto_configure:
 	--enable-shared
 
 override_dh_installchangelogs:
-	dh_installchangelogs -- -XChanges
+	dh_installchangelogs -XChanges
 %:
 	dh $@  --with systemd
 
