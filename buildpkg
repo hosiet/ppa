@@ -41,7 +41,13 @@ logger_console_handler = logging.StreamHandler()
 logger_formatter = logging.Formatter(
         '%(asctime)s - %(levelname)s - %(message)s')
 
-def pkg_process(pkglist: list, builddir: str, verbose=True, prepare_only=False):
+def pkg_process(
+        pkglist: list,
+        builddir: str,
+        buildtype: str,
+        verbose=True,
+        prepare_only=False
+        ):
     """Initialize all the building process.
 
     Work still in progress.
@@ -99,11 +105,22 @@ def pkg_process(pkglist: list, builddir: str, verbose=True, prepare_only=False):
                 try:
                     if prepare_only:
                         pass
-                    else:
+                    elif buildtype == 'DEBUILD':
                         # XXX: using os.system(), needs a better non-blocking solution
                         # TODO: Deal with gpg key problem
                         os.chdir(BUILDDIRNAME)
                         os.system('debuild -tc -i -k{}'.format(SIGNING_GPG_KEY))
+                    elif buildtype == 'COWBUILDER':
+                        # TODO: cowbuilder needs root privilege, which still needs
+                        #       to be implemented.
+                        logger.error('COWBUILDER SUPPORT NOT IMPLEMENTED YET')
+                        raise NotImplementedError(
+                                'ERR_COWBUILDER_NOT_IMPLEMENTED')
+                    else:
+                        raise NotImplementedError(
+                                'ERR_BUILDTYPE_NOT_RECOGNIZED:{}'.format(
+                                    buildtype)
+                                )
                 finally:
                     os.chdir(_cwd)
     finally:
@@ -144,6 +161,12 @@ if __name__ == "__main__":
             default=False,
             )
     parser.add_argument(
+            '-t', '--type',
+            help='specify build type, "DEBUILD"/"COWBUILDER"',
+            action='store',
+            default='DEBUILD',
+            )
+    parser.add_argument(
             '-d', '--builddir',
             help='working directory while building',
             default=BUILD_DIR)
@@ -158,12 +181,14 @@ if __name__ == "__main__":
     else:
         logger.setLevel(logging.INFO)
         logger_console_handler.setLevel(logging.INFO)
+    build_type = args.type.upper() if args.type and isinstance(args.type, str) else 'DEBUILD'
     logger_console_handler.setFormatter(logger_formatter)
     logger.addHandler(logger_console_handler)
     logger.debug('Received arguments: {}.'.format(repr(args)))
     pkg_process(
             pkglist = [ x for x in (DEB_PACKAGE_LIST if args.list else args.pkglist) if not x.startswith('-')],
             builddir = args.builddir,
+            buildtype = build_type,
             verbose = args.verbose,
             prepare_only = args.prepare,
             )
