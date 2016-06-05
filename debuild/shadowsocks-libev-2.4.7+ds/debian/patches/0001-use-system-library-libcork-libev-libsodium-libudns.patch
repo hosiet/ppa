@@ -1,0 +1,83 @@
+From: Roger Shimizu <rogershimizu@gmail.com>
+Date: Wed, 25 May 2016 22:57:14 +0900
+Subject: use system library: libcork libev libsodium libudns
+
+autoreconf runs before configure, so it still doesn't have the condition
+variable set yet.
+Currently remove all system library part for configure.ac and Makefile.am
+---
+ Makefile.am     |  6 +-----
+ configure.ac    | 14 --------------
+ src/Makefile.am |  5 ++---
+ 3 files changed, 3 insertions(+), 22 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 5d84f1e..6e198ce 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1,8 +1,4 @@
+-if USE_SYSTEM_SHARED_LIB
+-SUBDIRS = libcork libipset src
+-else
+-SUBDIRS = libsodium libcork libipset libudns libev src
+-endif
++SUBDIRS = libipset src
+ 
+ ACLOCAL_AMFLAGS = -I m4
+ man_MANS = man/shadowsocks-libev.8 man/ss-server.1 man/ss-local.1 man/ss-redir.1\
+diff --git a/configure.ac b/configure.ac
+index 86a43c1..cc518e7 100755
+--- a/configure.ac
++++ b/configure.ac
+@@ -54,11 +54,6 @@ AC_PROG_LIBTOOL
+ AC_PROG_MAKE_SET
+ AC_LANG_SOURCE
+ 
+-dnl Checks for libev
+-AM_COND_IF([USE_SYSTEM_SHARED_LIB],
+-  [],
+-  [m4_include([libev/libev.m4])])
+-
+ dnl Add library for mingw
+ case $host in
+   *-mingw*)
+@@ -279,17 +274,8 @@ dnl Add define for libudns to enable IPv6 support
+ dnl This is an option defined in the origin configure script
+ AC_DEFINE([HAVE_IPv6], [1], [Enable IPv6 support in libudns])
+ 
+-AM_COND_IF([USE_SYSTEM_SHARED_LIB],
+-  [],
+-  [AC_CONFIG_SUBDIRS([libsodium])])
+-
+ AC_CONFIG_FILES([ shadowsocks-libev.pc
+                  Makefile
+-                 libcork/Makefile
+                  libipset/Makefile
+                  src/Makefile])
+-AM_COND_IF([USE_SYSTEM_SHARED_LIB],
+-  [],
+-  [AC_CONFIG_FILES([libudns/Makefile
+-                 libev/Makefile])])
+ AC_OUTPUT
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 66578ce..b98262c 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -6,15 +6,14 @@ if !USE_SYSTEM_SHARED_LIB
+ AM_CFLAGS += -I$(top_srcdir)/libev
+ AM_CFLAGS += -I$(top_srcdir)/libudns
+ AM_CFLAGS += -I$(top_srcdir)/libsodium/src/libsodium/include
++AM_CFLAGS += -I$(top_srcdir)/libcork/include
+ endif
+ AM_CFLAGS += -I$(top_srcdir)/libipset/include
+-AM_CFLAGS += -I$(top_srcdir)/libcork/include
+ 
+ SS_COMMON_LIBS = $(top_builddir)/libipset/libipset.la \
+-                 $(top_builddir)/libcork/libcork.la \
+                  $(INET_NTOP_LIB)
+ if USE_SYSTEM_SHARED_LIB
+-SS_COMMON_LIBS += -lev -lsodium -lm
++SS_COMMON_LIBS += -lev -lsodium -lm -lcork
+ else
+ SS_COMMON_LIBS += $(top_builddir)/libev/libev.la \
+                   $(top_builddir)/libsodium/src/libsodium/libsodium.la

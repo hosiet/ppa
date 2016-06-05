@@ -1,0 +1,12 @@
+shadowsocks-libev (2.4.7+ds-0.1) unstable; urgency=medium
+
+  * New upstream release
+    - Rename libshadowsocks to libshadowsocks-libev
+    - Fix typo in manpage
+ -- Boyuan Yang <073plan@gmail.com>  Sun, 05 Jun 2016 16:53:32 +0800
+
+shadowsocks-libev (2.4.6+20160531+ds-1) unstable; urgency=medium
+
+  * Initial release (Closes: #824268)
+
+ -- Roger Shimizu <rogershimizu@gmail.com>  Tue, 17 May 2016 21:26:31 +0900

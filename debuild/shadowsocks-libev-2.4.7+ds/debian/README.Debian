@@ -6,12 +6,10 @@ reads the default configuration in /etc/default/shadowsocks-libev is installed
 and enabled by default, plus some other service templates placed in
 /lib/systemd/system, which can be used by users later.
 
-Another problem is that shadowsocks-libev is licensed under GPLv3+. This will
-conflict with OpenSSL License when linked against OpenSSL library. As a
-result, this package faces licensing problem. Use it at your own risk.
+Debian package also uses mbed TLS instead of OpenSSL to avoid conflicts
+between GPL-3 and OpenSSL License. This means that those ciphers that are
+not supported by mbet TLS will be unavailable. Check out the mbed TLS /
+PolarSSL section of README file for a more complete list of unsupported
+ciphers.
 
  -- Boyuan Yang <073plan@gmail.com>  Wed, 14 Oct 2015 09:18:50 +0800
-
-(No special notes.)
-
- -- Max Lv <max.c.lv@gmail.com>  Sat, 06 Apr 2013 16:59:15 +0800
