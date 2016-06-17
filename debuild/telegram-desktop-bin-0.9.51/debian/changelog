@@ -1,3 +1,9 @@
+telegram-desktop-bin (0.9.51-1) unstable; urgency=medium
+
+  * New upstream release 0.9.51 (17.06.16)
+
+ -- Boyuan Yang <073plan@gmail.com>  Fri, 17 Jun 2016 15:43:23 +0800
+
 telegram-desktop-bin (0.9.40-1) unstable; urgency=medium
 
   * New upstream release 0.9.40 (05.04.16)
