@@ -15,6 +15,7 @@ include /usr/share/dpkg/buildflags.mk
 
 # see FEATURE AREAS in dpkg-buildflags(1)
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export QT_SELECT = 5
 
 # see ENVIRONMENT in dpkg-buildflags(1)
 # package maintainers to append CFLAGS
