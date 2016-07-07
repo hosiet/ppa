@@ -4,7 +4,7 @@
 #export DH_VERBOSE = 1
 _PKGNAME=nixnote2
 #_UPSTREAM_VERSION=$(shell dpkg-parsechangelog | sed -rne 's,^Version: ([^-+~]+).*,\1,p')
-_UPSTREAM_VERSION=2.0-beta7
+_UPSTREAM_VERSION=2.0-beta8
 _DEBIAN_VERSION=$(shell dpkg-parsechangelog | grep '^Version: .*' | grep -o ' .*' | grep -o '[0-9].*')
 _VERSION=$(shell echo $(_DEBIAN_VERSION) | cut -d- -f 1)
 
