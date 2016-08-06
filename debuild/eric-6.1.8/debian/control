@@ -12,15 +12,14 @@ Build-Depends-Indep: dh-python,
                      python3-sip-dev,
                      qttools5-dev-tools
 X-Python3-Version: >=3.0
-Standards-Version: 3.9.7
+Standards-Version: 3.9.8
 Homepage: http://eric-ide.python-projects.org/
 Vcs-Svn: svn://anonscm.debian.org/python-apps/packages/eric/trunk/
 Vcs-Browser: https://anonscm.debian.org/viewvc/python-apps/packages/eric/trunk/
 
 Package: eric
 Architecture: all
-Depends: bicyclerepair (>= 0.9-4.1),
-         python-chardet,
+Depends: python-chardet,
          python3-pygments,
          python3-pyqt5,
          python3-pyqt5.qsci,
